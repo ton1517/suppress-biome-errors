@@ -1,6 +1,6 @@
 {
   "name": "@ton1517/suppress-biome-errors",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/ton1517/suppress-biome-errors"
@@ -8,7 +8,10 @@
   "author": "ton1517",
   "license": "MIT",
   "description": "A codemod that suppresses existing violations of biome rules.",
-  "keywords": ["biome", "codemod"],
+  "keywords": [
+    "biome",
+    "codemod"
+  ],
   "bugs": {
     "url": "https://github.com/ton1517/suppress-biome-errors/issues"
   },
@@ -20,7 +23,10 @@
   "bin": {
     "suppress-biome-errors": "./bin/index.mjs"
   },
-  "files": ["bin/index.mjs", "transforms/suppress-biome-errors.ts"],
+  "files": [
+    "bin/index.mjs",
+    "transforms/suppress-biome-errors.ts"
+  ],
   "scripts": {
     "lefthook-install": "lefthook install",
     "lint": "biome check .",
