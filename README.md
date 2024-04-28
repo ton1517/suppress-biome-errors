@@ -1,4 +1,7 @@
 # suppress-biome-errors
+[![npm](https://img.shields.io/npm/v/@ton1517/suppress-biome-errors.svg)](https://www.npmjs.com/package/@ton1517/suppress-biome-errors)
+[![Test](https://github.com/ton1517/suppress-biome-errors/actions/workflows/test.yml/badge.svg)](https://github.com/ton1517/suppress-biome-errors/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 If you have a large number of biome errors, you can use this tool to automatically add biome-ignore comments.
 
