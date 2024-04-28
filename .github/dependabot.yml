@@ -5,8 +5,12 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    assignees:
+      - "ton1517"
   - package-ecosystem: "github-actions"
     target-branch: "develop"
     directory: "/"
     schedule:
       interval: "weekly"
+    assignees:
+      - "ton1517"
