@@ -32,9 +32,12 @@ jobs:
       - run: yarn version ${{ github.event.inputs.bump_type }}
       - name: Push tag to GitHub
         run: |
+          git add package.json
+          git commit -m "v$(jq -r '.version' package.json)"
+          git tag "v$(jq -r '.version' package.json)"
           git push
           git push --tags
-      - run: yarn publish
+      - run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create Release to GitHub
