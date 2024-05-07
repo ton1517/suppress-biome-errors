@@ -28,7 +28,7 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
       - run: corepack enable
-      - run: yarn install --immutable --immutable-cache
+      - run: yarn install --immutable
       - run: yarn version ${{ github.event.inputs.bump_type }}
       - name: Push tag to GitHub
         run: |
