@@ -28,7 +28,7 @@
   "scripts": {
     "lefthook-install": "lefthook install",
     "lint": "biome check .",
-    "format": "yarn lint --apply",
+    "format": "yarn lint --write",
     "suppress-biome-errors": "node bin/index.mjs",
     "test": "jest"
   },
@@ -36,8 +36,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@biomejs/js-api": "0.6.0",
-    "@biomejs/wasm-nodejs": "1.7.3",
+    "@biomejs/js-api": "0.7.1",
+    "@biomejs/wasm-nodejs": "1.9.4",
     "chalk": "5.3.0",
     "commander": "^12.0.0",
     "cross-spawn": "7.0.3",
@@ -47,7 +47,7 @@
     "please-upgrade-node": "3.2.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.3",
+    "@biomejs/biome": "1.9.4",
     "@jest/globals": "^29.7.0",
     "@types/cross-spawn": "^6.0.6",
     "@types/find-config": "^1.0.4",

@@ -51,10 +51,10 @@ test('inserts a new comment in jsx', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
      <div>{a == b}</div>
-   </div>)
+   </div>
  );
 }`)
 })
@@ -68,12 +68,14 @@ test('inserts a new comment with empty message in jsx', async () => {
  );
 }`
 
-  await expect(modifySource(program, { message: '' })).resolves.toBe(`export function Component({ a, b }) {
+  await expect(
+    modifySource(program, { message: '' }),
+  ).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      {/* biome-ignore lint/suspicious/noDoubleEquals: */}
      <div>{a == b}</div>
-   </div>)
+   </div>
  );
 }`)
 })
@@ -105,12 +107,12 @@ test('inserts a new comment below an existing comment in jsx', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a }) {
  return (
-   (<div>
+   <div>
      {/* biome-ignore lint/suspicious/noDoubleEquals: */}
      {/* biome-ignore lint/correctness/noSelfAssign: TODO: Fix this the next time the file is edited. */}
      {/* biome-ignore lint/suspicious/noAssignInExpressions: TODO: Fix this the next time the file is edited. */}
      <div>{c = c}{b == c}</div>
-   </div>)
+   </div>
  );
 }`)
 })
@@ -127,11 +129,11 @@ test('inserts comments above a closing tag', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      <div>
        {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
      </div>{a == b}
-   </div>)
+   </div>
  );
 }`)
 })
@@ -147,10 +149,10 @@ test('supports adding comments to JSX attributes', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
    return (
-     (<div
+     <div
        // biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited.
        prop={a == b ? a : b}>
-     </div>)
+     </div>
    );
  }`)
 })
@@ -168,12 +170,12 @@ test('supports adding comments to JSX attributes containing markup', async () =>
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
    return (
-     (<div
+     <div
        prop={
          // biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited.
          <div prop={a == b ? a : b} />
        }>
-     </div>)
+     </div>
    );
  }`)
 })
@@ -184,7 +186,9 @@ test('supports alternative messages in javascript', async () => {
 }
 `
 
-  await expect(modifySource(program, { message: 'Something more informative' })).resolves.toBe(`export function foo(a, b) {
+  await expect(
+    modifySource(program, { message: 'Something more informative' }),
+  ).resolves.toBe(`export function foo(a, b) {
  // biome-ignore lint/suspicious/noDoubleEquals: Something more informative
  return a == b;
 }
@@ -200,12 +204,14 @@ test('supports alternative messages in jsx', async () => {
  );
 }`
 
-  await expect(modifySource(program, { message: 'Something more informative' })).resolves.toBe(`export function Component({ a, b }) {
+  await expect(
+    modifySource(program, { message: 'Something more informative' }),
+  ).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      {/* biome-ignore lint/suspicious/noDoubleEquals: Something more informative */}
      <div>{a == b}</div>
-   </div>)
+   </div>
  );
 }`)
 })
@@ -217,7 +223,9 @@ test('supports rule whitelist in javascript', async () => {
 }
 `
 
-  await expect(modifySource(program, { rules: 'lint/correctness/noUnreachable' })).resolves.toBe(`export function foo(a, b) {
+  await expect(
+    modifySource(program, { rules: 'lint/correctness/noUnreachable' }),
+  ).resolves.toBe(`export function foo(a, b) {
  return a == b;
  // biome-ignore lint/correctness/noUnreachable: TODO: Fix this the next time the file is edited.
  console.log('unreachable');
@@ -242,10 +250,10 @@ test('does not split JSX lines containing multiple nodes', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
      Some text <span>{a == b}</span>.
-   </div>)
+   </div>
  );
 }`)
 })
@@ -262,11 +270,11 @@ test('handles trailing text on the previous line', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
  return (
-   (<div>
+   <div>
      <div />Some text
      {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
      <span>{a == b}</span>.
-   </div>)
+   </div>
  );
 }`)
 })
@@ -283,12 +291,12 @@ return (
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
 return (
-  (<div>
+  <div>
     Some text <span>next to a span</span>
     {/* biome-ignore lint/a11y/useKeyWithClickEvents: TODO: Fix this the next time the file is edited. */}
     {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
     <span onClick={() => a == b}>hi</span>.
-  </div>)
+  </div>
 );
 }`)
 })
@@ -305,11 +313,11 @@ test('preserves significant leading whitespace in jsx text nodes', async () => {
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
   return (
-    (<div>
+    <div>
       <span>A span</span> next to some text
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: TODO: Fix this the next time the file is edited. */}
       <span onClick={() => a === b}>hi</span>.
-    </div>)
+    </div>
   );
 }`)
 })
@@ -326,12 +334,12 @@ test('preserves significant leading whitespace in jsx text nodes when multiple c
 
   await expect(modifySource(program)).resolves.toBe(`export function Component({ a, b }) {
    return (
-     (<div>
+     <div>
        <span>A span</span> next to some text
        {/* biome-ignore lint/a11y/useKeyWithClickEvents: TODO: Fix this the next time the file is edited. */}
        {/* biome-ignore lint/suspicious/noDoubleEquals: TODO: Fix this the next time the file is edited. */}
        <span onClick={() => a == b}>hi</span>.
-     </div>)
+     </div>
    );
  }`)
 })
@@ -385,7 +393,9 @@ test('correctly handles empty blocks with multiple violations in else if conditi
 test('add only one comment, even if there are multiple errors of the same category on the same line', async () => {
   const program = 'function fn(a: any, b: any, c: any) {}'
 
-  await expect(modifySource(program, { baseConfig: { parser: 'ts' } })).resolves.toBe(`// biome-ignore lint/suspicious/noExplicitAny: TODO: Fix this the next time the file is edited.
+  await expect(
+    modifySource(program, { baseConfig: { parser: 'ts' } }),
+  ).resolves.toBe(`// biome-ignore lint/suspicious/noExplicitAny: TODO: Fix this the next time the file is edited.
 function fn(a: any, b: any, c: any) {}`)
 })
 
